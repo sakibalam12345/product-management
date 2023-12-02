@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 require('dotenv').config()
 const port = process.env.PORT || 5000;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 app.use(cors());
 app.use(express.json());
@@ -38,11 +38,26 @@ app.get('/asset',async (req,res)=>{
 
 // end
 // employye api
+
+app.get('/employee',async(req,res)=>{
+  const result = await emplyeecollection.find().toArray()
+  res.send(result)
+})
+
+app.get('/employee/:id', async(req,res)=>{
+  const id = req.params.id;
+  const query = {_id : new ObjectId(id)}
+  const result = await emplyeecollection.findOne(query)
+  res.send(result)
+})
+
+
     app.post('/employee',async(req,res)=>{
       const user = req.body;
       const result = await emplyeecollection.insertOne(user)
       res.send(result)
     })
+    
     // end
 
 
