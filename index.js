@@ -57,7 +57,21 @@ app.get('/employee/:id', async(req,res)=>{
       const result = await emplyeecollection.insertOne(user)
       res.send(result)
     })
-    
+
+    app.patch('/employee/:id', async(req,res)=>{
+      const item = req.body;
+      const id = req.params.id;
+      const filter = { _id : new ObjectId(id) }
+      const updateddoc = {
+        $set : {
+          fullname : item.name,
+          dateofbirth : item.birth
+        }
+      }
+      const result = await emplyeecollection.updateOne(filter,updateddoc)
+      res.send(result)
+    })
+
     // end
 
 
