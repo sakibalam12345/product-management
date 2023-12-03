@@ -27,6 +27,7 @@ async function run() {
     // await client.connect();
     const emplyeecollection = client.db('Allemplyee').collection('employee');
     const assetcollection = client.db('Allasset').collection('asset');
+    const reqassetcollection = client.db('Reqasset').collection('assetreq');
 
 
 // asset api 
@@ -73,6 +74,15 @@ app.get('/employee/:id', async(req,res)=>{
     })
 
     // end
+
+    // req asset api
+
+    app.post('/assetreq',async(req,res)=>{
+      const item = req.body;
+      console.log(item)
+      const result = await reqassetcollection.insertOne(item)
+      res.send(result)
+    })
 
 
 
