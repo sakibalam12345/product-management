@@ -28,6 +28,7 @@ async function run() {
     const emplyeecollection = client.db('Allemplyee').collection('employee');
     const assetcollection = client.db('Allasset').collection('asset');
     const reqassetcollection = client.db('Reqasset').collection('assetreq');
+    const customreqassetcollection = client.db('CustomReqasset').collection('customreqassetreq');
 
 
 // asset api 
@@ -87,6 +88,15 @@ app.get('/employee/:id', async(req,res)=>{
    app.get('/assetreq', async(req,res)=>{
  const result = await reqassetcollection.find().toArray();
  res.send(result)
+})
+
+//  end
+// custom req asset api
+
+app.post('/customreqassetreq',async(req,res)=>{
+  const item = req.body;
+  const result = await customreqassetcollection.insertOne(item)
+  res.send(result)
 })
 
 
