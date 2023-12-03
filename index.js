@@ -99,6 +99,39 @@ app.post('/customreqassetreq',async(req,res)=>{
   res.send(result)
 })
 
+app.get('/customreqassetreq',async(req,res)=>{
+  const result = await customreqassetcollection.find().toArray()
+  res.send(result)
+})
+
+app.get('/customreqassetreq/:id', async(req,res)=>{
+  const id = req.params.id;
+  const query = {_id : new ObjectId(id)}
+  const result = await customreqassetcollection.findOne(query)
+  res.send(result)
+})
+
+app.patch('/customreqassetreq/:id', async(req,res)=>{
+  const item = req.body;
+  const id = req.params.id;
+  const filter = { _id : new ObjectId(id) }
+  const updateddoc = {
+    $set : {
+      Price : item.price ,
+      additionaleinfo : item.additioninfo,
+      assetimg : item.image,
+      assetname : item.name,
+      assettype : item.type,
+      requesteddate : item.reqdate,
+      status : item.assetstatus,
+      whyneedthis : item.whyneed
+    }
+  }
+  const result = await customreqassetcollection.updateOne(filter,updateddoc)
+  res.send(result)
+})
+// end
+
 
 
     // Send a ping to confirm a successful connection
