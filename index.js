@@ -84,6 +84,10 @@ app.get('/employee/:id', async(req,res)=>{
       res.send(result)
     })
 
+   app.get('/assetreq', async(req,res)=>{
+ const result = await reqassetcollection.find().toArray();
+ res.send(result)
+})
 
 
 
