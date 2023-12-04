@@ -29,7 +29,22 @@ async function run() {
     const assetcollection = client.db('Allasset').collection('asset');
     const reqassetcollection = client.db('Reqasset').collection('assetreq');
     const customreqassetcollection = client.db('CustomReqasset').collection('customreqassetreq');
+    const adminreqcollection = client.db('adminreqasset').collection('adminreq');
+// admin req asset
 
+app.post('/adminreq',async(req,res)=>{
+  const user = req.body;
+  console.log(user)
+  const result = await adminreqcollection.insertOne(user)
+  res.send(result)
+})
+
+app.get('/adminreq',async(req,res)=>{
+  const result = await adminreqcollection.find().toArray()
+  res.send(result)
+})
+
+// end
 
 // asset api 
 app.get('/asset',async (req,res)=>{
@@ -97,6 +112,22 @@ app.delete('/employee/:id',async(req,res)=>{
  res.send(result)
 })
 
+app.patch('/assetreq/:id', async(req,res)=>{
+  const item = req.body;
+  const id = req.params.id;
+  const filter = { _id : new ObjectId(id) }
+  const updateddoc = {
+    $set : {
+      RequestStatus : item.reqStatus,
+      Approvedate : item.appdate
+    }
+  }
+  const result = await reqassetcollection.updateOne(filter,updateddoc)
+  res.send(result)
+})
+
+
+
 //  end
 // custom req asset api
 
@@ -142,8 +173,8 @@ app.patch('/customreqassetreq/:id', async(req,res)=>{
 
 
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    // await client.db("admin").command({ ping: 1 });
+    // console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
