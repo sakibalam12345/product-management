@@ -126,6 +126,13 @@ app.patch('/assetreq/:id', async(req,res)=>{
   res.send(result)
 })
 
+app.delete('/assetreq/:id', async(req,res)=>{
+  const id = req.params.id;
+  const filter = { _id : new ObjectId(id)}
+  const result = await reqassetcollection.deleteOne(filter)
+  res.send(result)
+})
+
 
 
 //  end
